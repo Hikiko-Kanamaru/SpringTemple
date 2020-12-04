@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/style.css">
+<!-- <link rel="shortcut icon" href="favicon.ico" type="images/favicon.ico"> -->
 </head>
 <body>
 <h1>ここがあの女のハウスね</h1>
