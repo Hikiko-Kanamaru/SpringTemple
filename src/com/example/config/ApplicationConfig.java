@@ -1,6 +1,5 @@
 package com.example.config;
 
-import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
@@ -14,6 +13,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 @Configuration
 @ComponentScan(basePackages = "com.example")
@@ -66,14 +67,32 @@ public class ApplicationConfig implements WebMvcConfigurer {
 
 	@Bean
 	public DataSource dataSource() throws Exception{
-		InitialContext ctx = new InitialContext();
-//		個々のアドレスを変更することで、接続先を変更できます。
-		var ctxLU = ctx.lookup("java:comp/env/jdbc/practice_db");
-		return (DataSource)ctx;
+//		InitialContext ctx = new InitialContext();
+////		個々のアドレスを変更することで、接続先を変更できます。
+//		var ctxLU = ctx.lookup("java:comp/env/jdbc/practice_db");
+//		return (DataSource)ctx;
+
+//		c3p0
+//		引数はなしで
+		var dataSource = new ComboPooledDataSource();
+//		セットドライバークラスを設定する
+		dataSource.setDriverClass("com.mysql.cj.jdbc.Drivar");
+//		今までサーバーＸＭＬに書いていたものと一緒。jdbcUrl
+		String jdbcUrl = "jdbc:mysql://127.0.0.0:3306/practice_db"
+				+ "?"
+				+ "useUnicode=true"
+				+ "&"
+				+ "caracterEncoding=utf8"
+				+ "&"
+				+ "serverTimezone=JST";
+
+		dataSource.setJdbcUrl(jdbcUrl);
+		dataSource.setUser("root");
+		dataSource.setPassword("");
+
+		return dataSource;
+
 	}
-
-
-
 
 
 
