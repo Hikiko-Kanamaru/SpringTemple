@@ -7,6 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
@@ -20,6 +22,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @Configuration
 @ComponentScan(basePackages = "com.example")
 @EnableWebMvc
+@EnableTransactionManagement
 public class ApplicationConfig implements WebMvcConfigurer {
 
 //	ViewResolverの設定
@@ -102,6 +105,12 @@ public class ApplicationConfig implements WebMvcConfigurer {
 		return new NamedParameterJdbcTemplate(dataSource());
 	}
 
+
+//	トランザクションマネージャ
+	@Bean
+	public DataSourceTransactionManager txmanager() throws Exception{
+	return new DataSourceTransactionManager(dataSource());
+	}
 
 
 
