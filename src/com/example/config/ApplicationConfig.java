@@ -1,5 +1,8 @@
 package com.example.config;
 
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +46,7 @@ public class ApplicationConfig implements WebMvcConfigurer {
 
 
 
-//	バリデーション
+//	バリデーションのエラー時に出すメッセージを変更するファイル
 
 	@Override
 	public Validator getValidator() {
@@ -57,6 +60,21 @@ public class ApplicationConfig implements WebMvcConfigurer {
 	messageSource.setBasename("messages");
 	return messageSource;
 	}
+
+
+//	データベース関連の設定を書いていく
+
+	@Bean
+	public DataSource dataSource() throws Exception{
+		InitialContext ctx = new InitialContext();
+//		個々のアドレスを変更することで、接続先を変更できます。
+		var ctxLU = ctx.lookup("java:comp/env/jdbc/practice_db");
+		return (DataSource)ctx;
+	}
+
+
+
+
 
 
 }
