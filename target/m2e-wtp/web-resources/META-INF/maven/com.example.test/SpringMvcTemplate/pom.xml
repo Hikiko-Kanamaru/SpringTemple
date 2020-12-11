@@ -23,6 +23,14 @@
 			<version>${springframework.version}</version>
 		</dependency>
 
+<!-- 		SpringJDBC -->
+<!-- Spring JDBC -->
+<dependency>
+<groupId>org.springframework</groupId>
+<artifactId>spring-jdbc</artifactId>
+<version>${springframework.version}</version>
+</dependency>
+
 
 		<!-- jstl -->
 		<dependency>
