@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
@@ -93,6 +94,15 @@ public class ApplicationConfig implements WebMvcConfigurer {
 		return dataSource;
 
 	}
+
+//	名前はなんでも大丈夫　
+	@Bean
+	public NamedParameterJdbcTemplate jdbcTemplate()throws Exception{
+//上記のdataSourceを呼び出して利用する。
+		return new NamedParameterJdbcTemplate(dataSource());
+	}
+
+
 
 
 
