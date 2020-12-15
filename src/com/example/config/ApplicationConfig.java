@@ -108,7 +108,7 @@ public class ApplicationConfig implements WebMvcConfigurer {
 
 //	トランザクションマネージャ
 	@Bean
-	public DataSourceTransactionManager txmanager() throws Exception{
+	public DataSourceTransactionManager txManager() throws Exception{
 	return new DataSourceTransactionManager(dataSource());
 	}
 
