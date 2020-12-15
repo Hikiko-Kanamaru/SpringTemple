@@ -86,11 +86,11 @@ public class ApplicationConfig implements WebMvcConfigurer {
 //		セットドライバークラスを設定する
 		dataSource.setDriverClass("com.mysql.cj.jdbc.Drivar");
 //		今までサーバーＸＭＬに書いていたものと一緒。jdbcUrl
-		String jdbcUrl = "jdbc:mysql://127.0.0.0:3306/practice_db"
+		String jdbcUrl = "jdbc:mysql://127.0.0.1:3306/practice_db"
 				+ "?"
 				+ "useUnicode=true"
 				+ "&"
-				+ "caracterEncoding=utf8"
+				+ "characterEncoding=utf8"
 				+ "&"
 				+ "serverTimezone=JST";
 
