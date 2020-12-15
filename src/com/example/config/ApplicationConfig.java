@@ -2,11 +2,14 @@ package com.example.config;
 
 import javax.sql.DataSource;
 
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.support.ResourcePatternUtils;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
@@ -23,6 +26,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @ComponentScan(basePackages = "com.example")
 @EnableWebMvc
 @EnableTransactionManagement
+@MapperScan("com.example.dao")
 public class ApplicationConfig implements WebMvcConfigurer {
 
 //	ViewResolverの設定
@@ -99,17 +103,32 @@ public class ApplicationConfig implements WebMvcConfigurer {
 	}
 
 //	名前はなんでも大丈夫　
-	@Bean
-	public NamedParameterJdbcTemplate jdbcTemplate()throws Exception{
-//上記のdataSourceを呼び出して利用する。
-		return new NamedParameterJdbcTemplate(dataSource());
-	}
+//	@Bean
+//	public NamedParameterJdbcTemplate jdbcTemplate()throws Exception{
+////上記のdataSourceを呼び出して利用する。
+//		return new NamedParameterJdbcTemplate(dataSource());
+//	}
 
 
 //	トランザクションマネージャ
 	@Bean
 	public DataSourceTransactionManager txManager() throws Exception{
 	return new DataSourceTransactionManager(dataSource());
+	}
+
+
+
+//	データソースの指定
+	@Bean
+	public SqlSessionFactoryBean sqlSessionFactory() throws Exception{
+//	データソース処理をしてくれるファクトリーを作る
+		var factory = new SqlSessionFactoryBean();
+
+		var resolver = ResourcePatternUtils.getResourcePatternResolver(new DefaultResourceLoader());
+		factory.setDataSource(dataSource());
+//		XMLファイルを指定する
+		factory.setMapperLocations(resolver.getResources("classpath:**/dao/**/*.xml"));
+	return factory;
 	}
 
 
