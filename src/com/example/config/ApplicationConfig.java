@@ -125,6 +125,14 @@ public class ApplicationConfig implements WebMvcConfigurer {
 		var factory = new SqlSessionFactoryBean();
 
 		var resolver = ResourcePatternUtils.getResourcePatternResolver(new DefaultResourceLoader());
+
+//		スネークケースをキャメルケースに変更する。
+//		confがもうすでに別名でインポートされているので
+//		ＦＱＣＮで指定する
+		var conf = new org.apache.ibatis.session.Configuration();
+		conf.setMapUnderscoreToCamelCase(true);
+		factory.setConfiguration(conf);
+
 		factory.setDataSource(dataSource());
 //		XMLファイルを指定する
 		factory.setMapperLocations(resolver.getResources("classpath:**/dao/**/*.xml"));
